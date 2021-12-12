@@ -1,0 +1,8 @@
+main: me.aylias.parrot.lifesteal.LifeSteal
+name: LifeSteal
+version: 1.0
+description: Plugin for lifesteal
+api-version: 1.17
+commands:
+  withdraw:
+    usage: /

@@ -27,41 +27,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class Events implements Listener {
-    List<String> deadPlayers;
+    public static List<String> deadPlayers;
 
-    @EventHandler
-    public void onDeath(PlayerDeathEvent e) {
-        Player player = e.getEntity();
-        Player killer = e.getEntity().getKiller();
-        AttributeInstance attrDead = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-        double baseDead = attrDead.getBaseValue();
-        AttributeInstance attrKiller = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-        double baseKiller = attrKiller.getBaseValue();
-        if (baseDead > 2.0D) {
-            attrDead.setBaseValue(baseDead - 2.0D);
-            if (killer != null && baseKiller <= 38.0D) {
-                attrKiller.setBaseValue(baseKiller + 2.0D);
-            }
-        } else {
-            this.deadPlayers = LifeSteal.instance.getConfig().getStringList("Dead");
-            this.deadPlayers.add(player.getUniqueId().toString());
-            LifeSteal.getInstance().getConfig().set("Dead", this.deadPlayers);
-            LifeSteal.getInstance().saveConfig();
-            if (killer != null) {
-                player.getInventory().clear();
-                Bukkit.getBanList(Type.NAME).addBan(player.getName(), ChatColor.RED + "You died because of " + ChatColor.GOLD + killer.getName() + ChatColor.RED + ".", (Date)null, player.getName());
-                ChatColor var10001 = ChatColor.RED;
-                player.kickPlayer(var10001 + "You died because of " + ChatColor.GOLD + killer.getName() + ChatColor.RED + ".");
-                if (killer.getMaxHealth() <= 38.0D) {
-                    killer.setMaxHealth(killer.getMaxHealth() + 2.0D);
-                }
-            } else {
-                Bukkit.getBanList(Type.NAME).addBan(player.getName(), ChatColor.RED + "You died.", (Date)null, player.getName());
-                player.kickPlayer(ChatColor.RED + "You died.");
-            }
-        }
 
-    }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
@@ -69,10 +37,8 @@ public class Events implements Listener {
         List<String> revivedList = LifeSteal.getInstance().getConfig().getStringList("Revived");
         String reviver = null;
         String wholeString = null;
-        Iterator var6 = revivedList.iterator();
 
-        while(var6.hasNext()) {
-            String uuid = (String)var6.next();
+        for (String uuid : revivedList) {
             String[] uuids = uuid.split("%");
             if (UUID.fromString(uuids[0]).equals(player.getUniqueId())) {
                 reviver = Bukkit.getOfflinePlayer(UUID.fromString(uuids[1])).getName();
@@ -85,6 +51,7 @@ public class Events implements Listener {
             player.setMaxHealth(6.0D);
             player.sendMessage(ChatColor.GREEN + "You were revived by " + reviver + "!");
             revivedList.remove(wholeString);
+            player.getInventory().clear();
             LifeSteal.getInstance().getConfig().set("Revived", revivedList);
         }
 
@@ -108,7 +75,10 @@ public class Events implements Listener {
                 }
 
                 AttributeInstance attr = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-                attr.setBaseValue(attr.getBaseValue() + 2.0D);
+                attr.setBaseValue(attr.getBaseValue() + 2D);
+                if (player.getName().equalsIgnoreCase("ashswag")) {
+                    attr.setBaseValue(attr.getBaseValue() + 4D);
+                }
             }
         }
 
@@ -124,22 +94,25 @@ public class Events implements Listener {
 
     }
 
-    @EventHandler
-    public void playerCraft(CraftItemEvent e) {
-        ItemStack[] var2 = e.getInventory().getContents();
-        int var3 = var2.length;
-
-        for(int var4 = 0; var4 < var3; ++var4) {
-            ItemStack content = var2[var4];
-            if (content != null && content.getType().equals(Material.CARROT_ON_A_STICK)) {
-                ItemMeta meta = content.getItemMeta();
-                if (!meta.hasCustomModelData()) {
-                    e.setCancelled(true);
-                }
-            }
-        }
-
-    }
+//    @EventHandler
+//    public void playerCraft(CraftItemEvent e) {
+//        ItemStack[] inv = e.getInventory().getContents();
+//        int size = inv.length;
+//
+//        for(int index = 0; index < size; index++) {
+//            ItemStack content = inv[index];
+//            if (content != null) {
+//                if (content.getType().equals(Material.CARROT_ON_A_STICK)) {
+//                    ItemMeta meta = content.getItemMeta();
+//                    if (!meta.hasCustomModelData()) {
+//                        e.setCancelled(true);
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//
+//    }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {

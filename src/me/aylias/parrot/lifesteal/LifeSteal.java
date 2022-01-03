@@ -42,6 +42,7 @@ public class LifeSteal extends JavaPlugin implements Listener {
       this.heartFragment.setItemMeta(heartFragmentMeta);
       new Recipes(this);
       Bukkit.getPluginManager().registerEvents(new Events(), this);
+      Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
    }
 
    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

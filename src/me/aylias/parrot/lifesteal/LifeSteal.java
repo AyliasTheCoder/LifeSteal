@@ -57,55 +57,12 @@ public class LifeSteal extends JavaPlugin implements Listener {
    }
 
    private void Update() {
-
-
-//      try {
-//         if (new File("plugins/aLifeSteal.jar").exists()) {
-//            if (filesCompareByByte(Path.of("plugins/aLifeSteal.jar"), Path.of("plugins/LifeSteal.jar")) != -1) {
-//               getLogger().log(Level.INFO, "I gots the update just needa install it bro");
-//               Files.copy(Path.of("plugins/aLifeSteal.jar"), Path.of("plugins/LifeSteal.jar"),
-//                       StandardCopyOption.REPLACE_EXISTING);
-//            } else {
-//
-//            }
-//         } else {
-//            InputStream in = new URL("https://github.com/AyliasTheCoder/LifeSteal/blob/master/artifact/LifeSteal.jar?raw=true").openStream();
-//            Files.copy(in, Paths.get("plugins/aLifeSteal.jar"), StandardCopyOption.REPLACE_EXISTING);
-//
-//            if (filesCompareByByte(Path.of("plugins/aLifeSteal.jar"), Path.of("plugins/LifeSteal.jar")) != -1) {
-//               getLogger().log(Level.INFO, "They do be different tho");
-////            new File("plugins/LifeSteal.jar").delete();
-////            Files.copy(Path.of("plugins/aLifeSteal.jar"), Path.of("plugins/LifeSteal.jar"),
-////                    StandardCopyOption.REPLACE_EXISTING);
-//               new BukkitRunnable() {
-//                  @Override
-//                  public void run() {
-//                     Bukkit.dispatchCommand(getServer().getConsoleSender(), "restart");
-//                  }
-//               }.runTaskLater(this, 200);
-//            } else {
-//               new File("plugins/aLifeSteal.jar").delete();
-//            }
-//         }
-
       try {
-//         if (new File("plugins/aLifeSteal.jar").exists()) {
-//            if (filesCompareByByte(Path.of("plugins/aLifeSteal.jar"), Path.of("plugins/LifeSteal.jar")) != -1) {
-//               getLogger().log(Level.INFO, "I gots the update just needa install it bro");
-//               Files.copy(Path.of("plugins/aLifeSteal.jar"), Path.of("plugins/LifeSteal.jar"),
-//                       StandardCopyOption.REPLACE_EXISTING);
-//            } else {
-//
-//            }
-//         } else {
          InputStream in = new URL("https://github.com/AyliasTheCoder/LifeSteal/blob/master/artifact/LifeSteal.jar?raw=true").openStream();
          Files.copy(in, Paths.get("plugins/aLifeSteal.jar"), StandardCopyOption.REPLACE_EXISTING);
 
          if (filesCompareByByte(Path.of("plugins/aLifeSteal.jar"), Path.of("plugins/LifeSteal.jar")) != -1) {
             getLogger().log(Level.INFO, "They do be different tho");
-//            new File("plugins/LifeSteal.jar").delete();
-//            Files.copy(Path.of("plugins/aLifeSteal.jar"), Path.of("plugins/LifeSteal.jar"),
-//                    StandardCopyOption.REPLACE_EXISTING);
             new BukkitRunnable() {
                @Override
                public void run() {

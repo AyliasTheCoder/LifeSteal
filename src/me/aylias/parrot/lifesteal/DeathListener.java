@@ -21,11 +21,6 @@ public class DeathListener implements Listener {
         AttributeInstance attrDead = dead.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         double baseDead = attrDead.getBaseValue();
 
-        if (baseDead <= 4 && dead.getName().equalsIgnoreCase("ashswag")) {
-            attrDead.setBaseValue(baseDead + 2);
-            baseDead += 2;
-        }
-
         if (killer == null || killer.equals(dead)) {
             diedNoKiller(dead);
             return;

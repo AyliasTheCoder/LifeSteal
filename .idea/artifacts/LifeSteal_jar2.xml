@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="LifeSteal:jar">
-    <output-path>$PROJECT_DIR$/artifact</output-path>
+  <artifact type="jar" name="LifeSteal:jar2">
+    <output-path>$PROJECT_DIR$/server/plugins</output-path>
     <root id="archive" name="LifeSteal.jar">
       <element id="module-output" name="LifeSteal" />
     </root>

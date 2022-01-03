@@ -139,7 +139,7 @@ public class LifeSteal extends JavaPlugin implements Listener {
             if (ch != fis2.read()) {
                return pos;
             }
-            pos++;
+            pos += 1 ;
          }
          if (fis2.read() == -1) {
             return -1;

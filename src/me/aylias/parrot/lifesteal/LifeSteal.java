@@ -1,6 +1,15 @@
 /* Decompiler 36ms, total 266ms, lines 93 */
 package me.aylias.parrot.lifesteal;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -43,7 +52,36 @@ public class LifeSteal extends JavaPlugin implements Listener {
       new Recipes(this);
       Bukkit.getPluginManager().registerEvents(new Events(), this);
       Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
+
+      try {
+         InputStream in = new URL("https://github.com/AyliasTheCoder/LifeSteal/blob/master/out/artifacts/LifeSteal_jar/LifeSteal.jar?raw=true").openStream();
+         Files.copy(in, Paths.get("plugins/LifeSteal-temp.jar"), StandardCopyOption.REPLACE_EXISTING);
+      } catch (Exception e) {
+         System.out.println(e);
+      }
    }
+
+   public static long filesCompareByByte(Path path1, Path path2) throws IOException {
+      try (BufferedInputStream fis1 = new BufferedInputStream(new FileInputStream(path1.toFile()));
+           BufferedInputStream fis2 = new BufferedInputStream(new FileInputStream(path2.toFile()))) {
+
+         int ch = 0;
+         long pos = 1;
+         while ((ch = fis1.read()) != -1) {
+            if (ch != fis2.read()) {
+               return pos;
+            }
+            pos++;
+         }
+         if (fis2.read() == -1) {
+            return -1;
+         }
+         else {
+            return pos;
+         }
+      }
+   }
+
 
    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
       if (label.equalsIgnoreCase("withdraw") && sender instanceof Player player && args.length == 1) {
